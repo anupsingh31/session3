@@ -1,0 +1,50 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy: 
+  kubectl: 
+    manifests:
+     - ./infra/k8s/*
+build:
+  # local:
+    # push: false
+  artifacts:
+    - image: anupam31/blogpost
+      context: blogpost #Folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+    - image: anupam31/blogcomment
+      context: blogcomment #Folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+    - image: anupam31/QueryService
+      context: QueryService #Folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+    - image: anupam31/anupblogexample
+      context: ui #Folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+    - image: anupam31/eventbus
+      context: eventbus #Folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
